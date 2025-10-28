@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iTudo Hortifruti - Frescor e Qualidade</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --secondary: #ff9800;
+            --light: #f5f5f5;
+            --accent: #4caf50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .card {
+            border: none;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .price-tag {
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--secondary);
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .step-indicator:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        
+        .step.active .step-circle {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .step.completed .step-circle {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .checkout-card {
+            border-left: 4px solid var(--primary);
+        }
+        
+        .progress-bar {
+            background-color: var(--primary);
+        }
+        
+        .delivery-status {
+            border-left: 4px solid var(--primary);
+            padding-left: 15px;
+        }
+        
+        .about-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .product-detail-img {
+            max-height: 400px;
+            object-fit: cover;
+            width: 100%;
+            border-radius: 10px;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .quantity-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-left: none;
+            border-right: none;
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+        
+        .review-stars {
+            color: var(--secondary);
+        }
+
+        /* ===== ESTILOS PARA PRODUTOS - MELHORIAS ===== */
+        .product-card {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e8f5e8;
+        }
+
+        .product-image {
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .card-text {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        /* Melhorar os badges */
+        .category-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: var(--secondary);
+            color: #000;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        .price-tag {
+            background-color: var(--primary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 2;
+        }
+
+        /* Botões de categoria ativos */
+        .btn-outline-success.active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Melhorar o espaçamento */
+        .g-4 {
+            gap: 1.5rem !important;
+        }
+
+        /* Alert personalizado */
+        .custom-alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 300px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Rodapé */
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary);
+        }
+
+        /* Oferta especial */
+        .offer-badge {
+            background-color: #dc3545;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 3;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand text-success" href="#">
+                <i class="fas fa-leaf me-2"></i>iTudo Hortifruti
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Quem Somos</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <a href="#" class="text-dark me-3 position-relative">
+                        <i class="fas fa-shopping-cart fa-lg"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                    <button class="btn btn-outline-success">
+                        <i class="fas fa-user me-1"></i> Minha Conta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-4">Frescor e Qualidade Direto Para Sua Casa</h1>
+            <p class="lead mb-4">Frutas, verduras e legumes selecionados com o melhor preço</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-lg" id="deliveryAddress" placeholder="Digite seu endereço para delivery">
+                        <button class="btn btn-warning btn-lg" type="button" id="checkDelivery">
+                            Verificar Entrega
+                        </button>
+                    </div>
+                    <div id="deliveryResult" class="mt-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Nossos Produtos</h2>
+            <p class="lead mb-5">Selecione a categoria desejada</p>
+            
+            <!-- Category Filters -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="d-flex flex-wrap gap-2" id="categoryFilters">
+                        <button class="btn btn-outline-success active" data-category="all">Todos</button>
+                        <button class="btn btn-outline-success" data-category="frutas">Frutas</button>
+                        <button class="btn btn-outline-success" data-category="verduras">Verduras</button>
+                        <button class="btn btn-outline-success" data-category="legumes">Legumes</button>
+                        <button class="btn btn-outline-success" data-category="ofertas">Ofertas</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="row g-4" id="productsGrid">
+                <!-- Os produtos serão carregados via JavaScript -->
+            </div>
+            
+            <!-- More products button -->
+            <div class="text-center mt-5">
+                <button class="btn btn-outline-primary" id="loadMore">Ver Mais Produtos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">Quem Somos</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h3 class="mb-4">Nossa História</h3>
+                    <p class="lead">Há mais de 10 anos oferecendo os melhores produtos hortifrutí para nossa comunidade.</p>
+                    <p>O iTudo Hortifruti nasceu do sonho de levar alimentos frescos e de qualidade para todas as famílias, com preços justos e atendimento personalizado.</p>
+                    <p>Trabalhamos diretamente com produtores locais, garantindo a procedência e frescor de todos os nossos produtos enquanto apoiamos a agricultura familiar.</p>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-truck about-icon me-3"></i>
+                                <div>
+                                    <h5>Entrega Rápida</h5>
+                                    <p class="mb-0">Entregamos em até 2 horas</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-leaf about-icon me-3"></i>
+                                <div>
+                                    <h5>Produtos Frescos</h5>
+                                    <p class="mb-0">Selecionados diariamente</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-hand-holding-usd about-icon me-3"></i>
+                                <div>
+                                    <h5>Preços Justos</h5>
+                                    <p class="mb-0">Melhor custo-benefício</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-award about-icon me-3"></i>
+                                <div>
+                                    <h5>Qualidade Garantida</h5>
+                                    <p class="mb-0">Satisfação ou seu dinheiro de volta</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" class="img-fluid rounded shadow" alt="Nossa Loja">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5 class="text-success mb-4">
+                        <i class="fas fa-leaf me-2"></i>iTudo Hortifruti
+                    </h5>
+                    <p class="text-light">Levando frescor e qualidade para sua casa há mais de 10 anos. Sua satisfação é nossa prioridade.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="text-light mb-4">Links Rápidos</h5>
+                    <div class="footer-links">
+                        <a href="#home" class="d-block mb-2">Início</a>
+                        <a href="#products" class="d-block mb-2">Produtos</a>
+                        <a href="#about" class="d-block mb-2">Quem Somos</a>
+                        <a href="#" class="d-block mb-2">Promoções</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="text-light mb-4">Contato</h5>
+                    <div class="footer-links">
+                        <p class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Rua das Flores, 123</p>
+                        <p class="mb-2"><i class="fas fa-phone me-2"></i> (11) 9999-9999</p>
+                        <p class="mb-2"><i class="fas fa-envelope me-2"></i> contato@itudo.com.br</p>
+                        <p class="mb-2"><i class="fas fa-clock me-2"></i> Seg-Sáb: 7h-20h</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="text-light mb-4">Newsletter</h5>
+                    <p class="text-light mb-3">Receba nossas ofertas exclusivas!</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Seu e-mail">
+                        <button class="btn btn-success" type="button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="mt-3">
+                        <img src="https://cdn-icons-png.flaticon.com/512/179/179319.png" alt="Formas de Pagamento" style="height: 30px;" class="me-2">
+                        <img src="https://cdn-icons-png.flaticon.com/512/179/179347.png" alt="Formas de Pagamento" style="height: 30px;" class="me-2">
+                        <img src="https://cdn-icons-png.flaticon.com/512/179/179343.png" alt="Formas de Pagamento" style="height: 30px;">
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-light mb-0">&copy; 2024 iTudo Hortifruti. Todos os direitos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="footer-links">
+                        <a href="#" class="me-3">Política de Privacidade</a>
+                        <a href="#">Termos de Uso</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productModalLabel">Detalhes do Produto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="" class="product-detail-img" id="modalProductImage" alt="Produto">
+                        </div>
+                        <div class="col-md-6">
+                            <h3 id="modalProductName">Produto</h3>
+                            <div class="mb-3">
+                                <span class="price-tag" id="modalProductPrice">R$ 0,00</span>
+                            </div>
+                            <p class="mb-3" id="modalProductDescription">Descrição do produto.</p>
+                            
+                            <div class="mb-3">
+                                <h6>Informações Nutricionais (por 100g):</h6>
+                                <ul id="modalProductNutrition">
+                                    <li>Carregando...</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="quantity-control">
+                                <button class="quantity-btn" id="decreaseQty">-</button>
+                                <input type="text" class="quantity-input" value="1" id="productQty">
+                                <button class="quantity-btn" id="increaseQty">+</button>
+                                <span class="ms-2" id="quantityUnit">kg</span>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary" id="addToCart">
+                                    <i class="fas fa-cart-plus me-2"></i> Adicionar ao Carrinho
+                                </button>
+                                <button class="btn btn-outline-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#addressModal">
+                                    Comprar Agora
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Address Modal -->
+    <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addressModalLabel">Endereço de Entrega</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Step Indicator -->
+                    <div class="step-indicator">
+                        <div class="step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Produto</span>
+                        </div>
+                        <div class="step active">
+                            <div class="step-circle">2</div>
+                            <span>Endereço</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-circle">3</div>
+                            <span>Pagamento</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-circle">4</div>
+                            <span>Confirmação</span>
+                        </div>
+                    </div>
+                    
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="cep" class="form-label">CEP</label>
+                                <input type="text" class="form-control" id="cep" placeholder="00000-000">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="address" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="address" placeholder="Rua, Avenida, etc.">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="number" class="form-label">Número</label>
+                                <input type="text" class="form-control" id="number" placeholder="123">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="complement" class="form-label">Complemento</label>
+                                <input type="text" class="form-control" id="complement" placeholder="Apto, Bloco, etc.">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="neighborhood" class="form-label">Bairro</label>
+                                <input type="text" class="form-control" id="neighborhood">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="city" class="form-label">Cidade</label>
+                                <input type="text" class="form-control" id="city">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="state" class="form-label">Estado</label>
+                                <select class="form-select" id="state">
+                                    <option selected>Selecione...</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="MG">Minas Gerais</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="card checkout-card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Resumo do Pedido</h5>
+                                <div class="d-flex justify-content-between">
+                                    <span>Maçã Gala (1kg)</span>
+                                    <span>R$ 8,90</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Taxa de entrega</span>
+                                    <span>R$ 5,00</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between fw-bold">
+                                    <span>Total</span>
+                                    <span>R$ 13,90</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                                Continuar para Pagamento
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentModalLabel">Pagamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Step Indicator -->
+                    <div class="step-indicator">
+                        <div class="step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Produto</span>
+                        </div>
+                        <div class="step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Endereço</span>
+                        </div>
+                        <div class="step active">
+                            <div class="step-circle">3</div>
+                            <span>Pagamento</span>
+                        </div>
+                        <div class="step">
+                            <div class="step-circle">4</div>
+                            <span>Confirmação</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Selecione a forma de pagamento</h5>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" checked>
+                            <label class="form-check-label" for="creditCard">
+                                <i class="fas fa-credit-card me-2"></i> Cartão de Crédito
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="debitCard">
+                            <label class="form-check-label" for="debitCard">
+                                <i class="fas fa-credit-card me-2"></i> Cartão de Débito
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="pix">
+                            <label class="form-check-label" for="pix">
+                                <i class="fas fa-qrcode me-2"></i> PIX
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentMethod" id="cash">
+                            <label class="form-check-label" for="cash">
+                                <i class="fas fa-money-bill-wave me-2"></i> Dinheiro na Entrega
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Credit Card Form -->
+                    <div id="creditCardForm">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="cardNumber" class="form-label">Número do Cartão</label>
+                                <input type="text" class="form-control" id="cardNumber" placeholder="0000 0000 0000 0000">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cardName" class="form-label">Nome no Cartão</label>
+                                <input type="text" class="form-control" id="cardName">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="cardExpiry" class="form-label">Validade</label>
+                                <input type="text" class="form-control" id="cardExpiry" placeholder="MM/AA">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="cardCvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cardCvv" placeholder="000">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card checkout-card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Resumo do Pedido</h5>
+                            <div class="d-flex justify-content-between">
+                                <span>Maçã Gala (1kg)</span>
+                                <span>R$ 8,90</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Taxa de entrega</span>
+                                <span>R$ 5,00</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between fw-bold">
+                                <span>Total</span>
+                                <span>R$ 13,90</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#deliveryModal">
+                            Finalizar Pedido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delivery Tracking Modal -->
+    <div class="modal fade" id="deliveryModal" tabindex="-1" aria-labelledby="deliveryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deliveryModalLabel">Acompanhe seu Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Step Indicator -->
+                    <div class="step-indicator">
+                        <div class="step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Produto</span>
+                        </div>
+                        <div class="step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Endereço</span>
+                        </div>
+                        <div class="step completed">
+                            <div class="step-circle">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Pagamento</span>
+                        </div>
+                        <div class="step active">
+                            <div class="step-circle">4</div>
+                            <span>Confirmação</span>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                        <h3 class="mt-3">Pedido Confirmado!</h3>
+                        <p class="lead">Seu pedido #12345 foi recebido e está sendo preparado.</p>
+                    </div>
+                    
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Status da Entrega</h5>
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="delivery-status">
+                                <p><strong>Pedido Recebido</strong> - 14:30</p>
+                                <p>Preparando seu pedido - <em>Estimativa: 14:45</em></p>
+                                <p class="text-muted">Saiu para entrega - <em>Estimativa: 15:15</em></p>
+                                <p class="text-muted">Entregue - <em>Estimativa: 15:45 - 16:15</em></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Resumo do Pedido</h5>
+                                    <p><strong>Pedido:</strong> #12345</p>
+                                    <p><strong>Data:</strong> 15/10/2023</p>
+                                    <p><strong>Total:</strong> R$ 13,90</p>
+                                    <p><strong>Forma de pagamento:</strong> Cartão de Crédito</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Endereço de Entrega</h5>
+                                    <p>Rua das Flores, 123<br>
+                                    Jardim Primavera<br>
+                                    São Paulo - SP<br>
+                                    CEP: 01234-567</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                            Deixar Avaliação
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">Avalie sua Experiência</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <div class="review-stars mb-3" style="font-size: 2rem;">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p>Como foi sua experiência com a iTudo Hortifruti?</p>
+                    </div>
+                    <form>
+                        <div class="mb-3">
+                            <label for="reviewComment" class="form-label">Seu comentário</label>
+                            <textarea class="form-control" id="reviewComment" rows="3" placeholder="Conte-nos sobre sua experiência..."></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-primary">Enviar Avaliação</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript Custom -->
+    <script>
+        // Base de dados de produtos
+        const products = [
+            // FRUTAS
+            {
+                id: 1,
+                name: "Maçã Gala",
+                category: "frutas",
+                price: 8.90,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Maçãs frescas e suculentas, colhidas no ponto ideal. Perfeitas para consumo in natura, sucos e preparo de sobremesas.",
+                nutrition: ["Calorias: 52 kcal", "Carboidratos: 14g", "Fibras: 2,4g", "Vitamina C: 4,6mg"],
+                rating: 4.5,
+                offer: false
+            },
+            {
+                id: 2,
+                name: "Limão Taiti",
+                category: "frutas",
+                price: 6.90,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1547514701-42782101795e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Limões suculentos, perfeitos para sucos, temperos e drinks. Rico em vitamina C.",
+                nutrition: ["Calorias: 29 kcal", "Carboidratos: 9g", "Fibras: 2,8g", "Vitamina C: 53mg"],
+                rating: 4.7,
+                offer: false
+            },
+            {
+                id: 3,
+                name: "Banana Nanica",
+                category: "frutas",
+                price: 4.50,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Bananas maduras e doces, ideais para vitaminas e sobremesas. Fonte de potássio.",
+                nutrition: ["Calorias: 89 kcal", "Carboidratos: 23g", "Fibras: 2,6g", "Potássio: 358mg"],
+                rating: 4.8,
+                offer: true,
+                originalPrice: 5.90
+            },
+            {
+                id: 4,
+                name: "Laranja Pera",
+                category: "frutas",
+                price: 5.90,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1557800636-894a64c1696f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Laranjas doces e suculentas, perfeitas para sucos naturais. Rica em vitamina C.",
+                nutrition: ["Calorias: 47 kcal", "Carboidratos: 12g", "Fibras: 2,4g", "Vitamina C: 53,2mg"],
+                rating: 4.6,
+                offer: false
+            },
+            {
+                id: 5,
+                name: "Mamão Papaia",
+                category: "frutas",
+                price: 7.90,
+                unit: "un",
+                image: "https://images.unsplash.com/photo-1571575173700-afb9492e6a50?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Mamão maduro e doce, excelente para o sistema digestivo. Rico em vitaminas A e C.",
+                nutrition: ["Calorias: 43 kcal", "Carboidratos: 11g", "Fibras: 1,7g", "Vitamina C: 61mg"],
+                rating: 4.4,
+                offer: false
+            },
+            {
+                id: 6,
+                name: "Uva Verde",
+                category: "frutas",
+                price: 12.90,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Uvas verdes crocantes e doces. Perfeitas para consumo direto ou preparo de sucos.",
+                nutrition: ["Calorias: 69 kcal", "Carboidratos: 18g", "Fibras: 0,9g", "Vitamina K: 14,6mcg"],
+                rating: 4.9,
+                offer: true,
+                originalPrice: 15.90
+            },
+            {
+                id: 7,
+                name: "Morango",
+                category: "frutas",
+                price: 14.90,
+                unit: "band",
+                image: "https://images.unsplash.com/photo-1464454709131-ffd692591ee5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Morangos frescos e doces, colhidos diariamente. Perfeitos para sobremesas.",
+                nutrition: ["Calorias: 32 kcal", "Carboidratos: 7,7g", "Fibras: 2g", "Vitamina C: 58,8mg"],
+                rating: 4.7,
+                offer: false
+            },
+            {
+                id: 8,
+                name: "Abacaxi",
+                category: "frutas",
+                price: 9.90,
+                unit: "un",
+                image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Abacaxi doce e suculento, ideal para sucos e sobremesas. Rico em bromelina.",
+                nutrition: ["Calorias: 50 kcal", "Carboidratos: 13g", "Fibras: 1,4g", "Vitamina C: 47,8mg"],
+                rating: 4.5,
+                offer: true,
+                originalPrice: 11.90
+            },
+
+            // VERDURAS
+            {
+                id: 9,
+                name: "Alface Crespa",
+                category: "verduras",
+                price: 3.50,
+                unit: "un",
+                image: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Alface fresquinha, perfeita para saladas e sanduíches. Colhida diariamente.",
+                nutrition: ["Calorias: 15 kcal", "Carboidratos: 2,9g", "Fibras: 1,3g", "Vitamina A: 7405 UI"],
+                rating: 4.3,
+                offer: false
+            },
+            {
+                id: 10,
+                name: "Rúcula",
+                category: "verduras",
+                price: 4.20,
+                unit: "maço",
+                image: "https://images.unsplash.com/photo-1594282485403-fbd0c3065149?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Rúcula fresca com sabor levemente picante. Ideal para saladas e pizzas.",
+                nutrition: ["Calorias: 25 kcal", "Carboidratos: 3,7g", "Fibras: 1,6g", "Cálcio: 160mg"],
+                rating: 4.5,
+                offer: false
+            },
+            {
+                id: 11,
+                name: "Espinafre",
+                category: "verduras",
+                price: 5.80,
+                unit: "maço",
+                image: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Espinafre fresco, rico em ferro. Perfeito para refogados e saladas.",
+                nutrition: ["Calorias: 23 kcal", "Carboidratos: 3,6g", "Fibras: 2,2g", "Ferro: 2,7mg"],
+                rating: 4.6,
+                offer: true,
+                originalPrice: 6.90
+            },
+            {
+                id: 12,
+                name: "Couve",
+                category: "verduras",
+                price: 4.90,
+                unit: "maço",
+                image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Couve fresca, ideal para refogados, caldos e sucos verdes.",
+                nutrition: ["Calorias: 49 kcal", "Carboidratos: 9g", "Fibras: 3,6g", "Cálcio: 150mg"],
+                rating: 4.4,
+                offer: false
+            },
+            {
+                id: 13,
+                name: "Agrião",
+                category: "verduras",
+                price: 4.50,
+                unit: "maço",
+                image: "https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Agrião fresco com sabor picante. Rico em vitaminas e minerais.",
+                nutrition: ["Calorias: 11 kcal", "Carboidratos: 1,3g", "Fibras: 0,5g", "Vitamina C: 43mg"],
+                rating: 4.2,
+                offer: false
+            },
+
+            // LEGUMES
+            {
+                id: 14,
+                name: "Cenoura",
+                category: "legumes",
+                price: 4.90,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Cenouras frescas e crocantes, ricas em vitamina A. Perfeitas para saladas e cozidos.",
+                nutrition: ["Calorias: 41 kcal", "Carboidratos: 10g", "Fibras: 2,8g", "Vitamina A: 16706 UI"],
+                rating: 4.8,
+                offer: false
+            },
+            {
+                id: 15,
+                name: "Tomate",
+                category: "legumes",
+                price: 6.50,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1592924356291-6db4024cb7b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Tomates vermelhos e suculentos. Ideais para saladas, molhos e sucos.",
+                nutrition: ["Calorias: 18 kcal", "Carboidratos: 3,9g", "Fibras: 1,2g", "Vitamina C: 13,7mg"],
+                rating: 4.7,
+                offer: false
+            },
+            {
+                id: 16,
+                name: "Batata Inglesa",
+                category: "legumes",
+                price: 3.90,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Batatas selecionadas, perfeitas para fritas, purê e cozidos.",
+                nutrition: ["Calorias: 77 kcal", "Carboidratos: 17g", "Fibras: 2,2g", "Potássio: 421mg"],
+                rating: 4.5,
+                offer: true,
+                originalPrice: 4.90
+            },
+            {
+                id: 17,
+                name: "Cebola",
+                category: "legumes",
+                price: 5.20,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1580201092673-a5d4e7b5a4f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Cebolas frescas, essenciais para temperos e refogados.",
+                nutrition: ["Calorias: 40 kcal", "Carboidratos: 9g", "Fibras: 1,7g", "Vitamina C: 7,4mg"],
+                rating: 4.3,
+                offer: false
+            },
+            {
+                id: 18,
+                name: "Pimentão Verde",
+                category: "legumes",
+                price: 8.90,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1593620659530-7f33c34b8c9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Pimentões verdes crocantes, ideais para saladas e refogados.",
+                nutrition: ["Calorias: 20 kcal", "Carboidratos: 4,6g", "Fibras: 1,7g", "Vitamina C: 80,4mg"],
+                rating: 4.4,
+                offer: true,
+                originalPrice: 10.90
+            },
+            {
+                id: 19,
+                name: "Abobrinha",
+                category: "legumes",
+                price: 6.80,
+                unit: "kg",
+                image: "https://images.unsplash.com/photo-1595341888016-a392ef81b7de?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Abobrinhas frescas, perfeitas para refogados e gratinados.",
+                nutrition: ["Calorias: 17 kcal", "Carboidratos: 3,1g", "Fibras: 1g", "Vitamina C: 17,9mg"],
+                rating: 4.6,
+                offer: false
+            },
+            {
+                id: 20,
+                name: "Brócolis",
+                category: "legumes",
+                price: 7.50,
+                unit: "un",
+                image: "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                description: "Brócolis fresco, rico em nutrientes. Ideal para saladas e cozidos.",
+                nutrition: ["Calorias: 34 kcal", "Carboidratos: 7g", "Fibras: 2,6g", "Vitamina C: 89,2mg"],
+                rating: 4.7,
+                offer: false
+            }
+        ];
+
+        let currentProducts = [];
+        let currentCategory = 'all';
+        let productsToShow = 8;
+
+        // Inicializar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            setupEventListeners();
+        });
+
+        // Carregar produtos
+        function loadProducts() {
+            currentProducts = [...products];
+            displayProducts();
+        }
+
+        // Mostrar produtos na grid
+        function displayProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            const filteredProducts = currentProducts
+                .filter(product => {
+                    if (currentCategory === 'all') return true;
+                    if (currentCategory === 'ofertas') return product.offer;
+                    return product.category === currentCategory;
+                })
+                .slice(0, productsToShow);
+
+            if (filteredProducts.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">Nenhum produto encontrado</h4>
+                        <p class="text-muted">Tente alterar os filtros de busca.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                grid.innerHTML += productCard;
+            });
+
+            // Atualizar botão "Ver Mais"
+            const totalFiltered = currentProducts.filter(product => {
+                if (currentCategory === 'all') return true;
+                if (currentCategory === 'ofertas') return product.offer;
+                return product.category === currentCategory;
+            }).length;
+
+            document.getElementById('loadMore').style.display = 
+                productsToShow >= totalFiltered ? 'none' : 'block';
+        }
+
+        // Criar card do produto
+        function createProductCard(product) {
+            const stars = generateStars(product.rating);
+            const offerBadge = product.offer ? '<span class="offer-badge">OFERTA</span>' : '';
+            const originalPrice = product.offer ? 
+                `<span class="original-price ms-2">R$ ${product.originalPrice.toFixed(2).replace('.', ',')}</span>` : '';
+
+            return `
+                <div class="col-md-6 col-lg-3" data-category="${product.category}" data-offer="${product.offer}">
+                    <div class="card product-card h-100">
+                        <div class="position-relative">
+                            <img src="${product.image}" class="card-img-top product-image" alt="${product.name}">
+                            ${offerBadge}
+                            <span class="category-badge">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</span>
+                            <span class="price-tag">R$ ${product.price.toFixed(2).replace('.', ',')}/${product.unit}</span>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text flex-grow-1">${product.description}</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <div class="review-stars">
+                                    ${stars}
+                                </div>
+                                <button class="btn btn-primary btn-sm" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#productModal" 
+                                        data-product='${JSON.stringify(product).replace(/'/g, "&#39;")}'>
+                                    Ver Detalhes
+                                </button>
+                            </div>
+                            ${originalPrice}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Gerar estrelas de avaliação
+        function generateStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+
+            for (let i = 1; i <= 5; i++) {
+                if (i <= fullStars) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i === fullStars + 1 && hasHalfStar) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+            return stars;
+        }
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Filtros de categoria
+            document.querySelectorAll('#categoryFilters button').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('#categoryFilters button').forEach(btn => 
+                        btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    currentCategory = this.getAttribute('data-category');
+                    productsToShow = 8;
+                    displayProducts();
+                });
+            });
+
+            // Botão "Ver Mais"
+            document.getElementById('loadMore').addEventListener('click', function() {
+                productsToShow += 4;
+                displayProducts();
+            });
+
+            // Verificação de entrega
+            document.getElementById('checkDelivery').addEventListener('click', function() {
+                const address = document.getElementById('deliveryAddress').value.trim();
+                const resultDiv = document.getElementById('deliveryResult');
+                
+                if (!address) {
+                    resultDiv.innerHTML = '<div class="alert alert-warning">Por favor, digite um endereço.</div>';
+                    return;
+                }
+
+                // Simulação de verificação
+                resultDiv.innerHTML = '<div class="alert alert-info">Verificando disponibilidade...</div>';
+                
+                setTimeout(() => {
+                    const available = Math.random() > 0.3; // 70% de chance de estar disponível
+                    if (available) {
+                        resultDiv.innerHTML = `
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle me-2"></i>
+                                Entregamos no seu endereço! Taxa de entrega: R$ 5,00
+                            </div>
+                        `;
+                    } else {
+                        resultDiv.innerHTML = `
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Não entregamos neste endereço no momento.
+                            </div>
+                        `;
+                    }
+                }, 1500);
+            });
+
+            // Modal de produto
+            const productModal = document.getElementById('productModal');
+            if (productModal) {
+                productModal.addEventListener('show.bs.modal', function(event) {
+                    const button = event.relatedTarget;
+                    const productData = button.getAttribute('data-product');
+                    
+                    if (productData) {
+                        const product = JSON.parse(productData.replace(/&#39;/g, "'"));
+                        updateProductModal(product);
+                    }
+                });
+            }
+
+            // Controle de quantidade
+            setupQuantityControl();
+        }
+
+        // Atualizar modal do produto
+        function updateProductModal(product) {
+            document.getElementById('modalProductName').textContent = product.name;
+            document.getElementById('modalProductImage').src = product.image;
+            document.getElementById('modalProductPrice').textContent = `R$ ${product.price.toFixed(2).replace('.', ',')}/${product.unit}`;
+            document.getElementById('modalProductDescription').textContent = product.description;
+            document.getElementById('quantityUnit').textContent = product.unit;
+            
+            const nutritionList = document.getElementById('modalProductNutrition');
+            nutritionList.innerHTML = '';
+            product.nutrition.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                nutritionList.appendChild(li);
+            });
+
+            // Resetar quantidade
+            document.getElementById('productQty').value = 1;
+            updateAddToCartText(product);
+        }
+
+        // Configurar controle de quantidade
+        function setupQuantityControl() {
+            const decreaseBtn = document.getElementById('decreaseQty');
+            const increaseBtn = document.getElementById('increaseQty');
+            const quantityInput = document.getElementById('productQty');
+
+            if (increaseBtn && decreaseBtn && quantityInput) {
+                increaseBtn.addEventListener('click', function() {
+                    let currentValue = parseInt(quantityInput.value) || 1;
+                    quantityInput.value = currentValue + 1;
+                    updateAddToCartText();
+                });
+                
+                decreaseBtn.addEventListener('click', function() {
+                    let currentValue = parseInt(quantityInput.value) || 1;
+                    if (currentValue > 1) {
+                        quantityInput.value = currentValue - 1;
+                        updateAddToCartText();
+                    }
+                });
+                
+                quantityInput.addEventListener('change', function() {
+                    let value = parseInt(this.value) || 1;
+                    if (value < 1) value = 1;
+                    this.value = value;
+                    updateAddToCartText();
+                });
+            }
+        }
+
+        // Atualizar texto do botão "Adicionar ao Carrinho"
+        function updateAddToCartText() {
+            const addToCartBtn = document.getElementById('addToCart');
+            const quantityInput = document.getElementById('productQty');
+            
+            if (addToCartBtn && quantityInput) {
+                const quantity = parseInt(quantityInput.value) || 1;
+                const productName = document.getElementById('modalProductName').textContent;
+                addToCartBtn.innerHTML = `<i class="fas fa-cart-plus me-2"></i> Adicionar ${quantity} ao Carrinho`;
+            }
+        }
+
+        // Adicionar ao carrinho
+        document.getElementById('addToCart').addEventListener('click', function() {
+            const productName = document.getElementById('modalProductName').textContent;
+            const quantity = parseInt(document.getElementById('productQty').value) || 1;
+            
+            // Atualizar badge do carrinho
+            const cartBadge = document.querySelector('.cart-badge');
+            if (cartBadge) {
+                let currentCount = parseInt(cartBadge.textContent) || 0;
+                cartBadge.textContent = currentCount + 1;
+            }
+            
+            // Fechar modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
+            modal.hide();
+            
+            // Mostrar feedback
+            showAlert(`${quantity} ${document.getElementById('quantityUnit').textContent} de ${productName} adicionado ao carrinho!`, 'success');
+        });
+
+        // Função para mostrar alertas
+        function showAlert(message, type = 'info') {
+            // Remover alertas existentes
+            const existingAlerts = document.querySelectorAll('.custom-alert');
+            existingAlerts.forEach(alert => alert.remove());
+
+            // Criar elemento de alerta
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} custom-alert alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // Remover automaticamente após 3 segundos
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
